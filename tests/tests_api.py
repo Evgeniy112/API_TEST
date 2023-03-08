@@ -1,9 +1,7 @@
 import pytest
-import requests
-import json
 
-from api import RegRequest
 import settings
+from api import RegRequest
 
 tr = RegRequest()
 
@@ -15,15 +13,19 @@ class TestClassPos:
     def test_get_api_sol(self, params=settings.valid_header_sol):
         # Позитивный тест GET-запроса фото марса по sol
         status, result = tr.get_api(params)
+        photo = result['photos'][0]
         assert status == 200
         assert "photos" in result
+        assert 'id' and 'sol' and 'camera' and 'img_src' and 'earth_date' and 'rover' in photo
 
     @pytest.mark.get
     def test_get_api_earth_date(self, params=settings.valid_header_earth_date):
         # Позитивный тест GET-запроса фото марса по earth_date
         status, result = tr.get_api(params)
+        photo = result['photos'][0]
         assert status == 200
         assert "photos" in result
+        assert 'id' and 'sol' and 'camera' and 'img_src' and 'earth_date' and 'rover' in photo
 
 
 @pytest.mark.api
